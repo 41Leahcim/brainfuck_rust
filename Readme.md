@@ -1,0 +1,2 @@
+# Brainfuck
+You can run any brainfuck program by compiling and running the interpreter with the brainfuck program file as argument. You can also activate optimizations, though it doesn't work for all programs (not even all exmaples in the brainfuck_examples directory). Optimizations are usually not needed as most programs will finish in a fraction of a millisecond.
