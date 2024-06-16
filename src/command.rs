@@ -9,8 +9,8 @@ pub struct InvalidCommand(char);
 impl error::Error for InvalidCommand {}
 
 impl Display for InvalidCommand {
-    fn fmt(&self, formatter: &mut Formatter<'_>) -> fmt::Result {
-        write!(formatter, "Invalid command: {}", self.0)
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(f, "Invalid command: {}", self.0)
     }
 }
 

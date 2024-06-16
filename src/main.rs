@@ -15,7 +15,8 @@
     clippy::match_on_vec_items,
     clippy::single_call_fn,
     clippy::wildcard_enum_match_arm,
-    clippy::use_debug
+    clippy::use_debug,
+    clippy::min_ident_chars
 )]
 
 use std::{
