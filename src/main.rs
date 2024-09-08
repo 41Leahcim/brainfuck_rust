@@ -17,13 +17,14 @@
     clippy::wildcard_enum_match_arm,
     clippy::use_debug,
     clippy::min_ident_chars,
+    clippy::panic,
     reason = ""
 )]
 
 use std::{
     env::args,
     fs::File,
-    io::{BufReader, Read},
+    io::{BufReader, Read}, time::Instant,
 };
 
 use chars::Chars;
@@ -54,10 +55,13 @@ fn main() {
     // Read the name of the brainfuck file and check whether the code should be optimized
     let mut file_name = None;
     let mut optimization = false;
-    for argument in args().skip(1).take(2) {
+    let mut performance = false;
+    for argument in args().skip(1).take(3) {
         match argument.as_str() {
-            "-O" => optimization = true,
-            _ => file_name = Some(argument),
+            "-O" if !optimization => optimization = true,
+            "-p" if !performance => performance = true,
+            _ if file_name.is_none() => file_name = Some(argument),
+            _ => panic!("Unexpected argument: {argument}")
         }
     }
     let file_name = file_name.expect("No filename found");
@@ -71,6 +75,8 @@ fn main() {
         .map(Command::try_from)
         .filter_map(Result::ok);
 
+    let start = performance.then(Instant::now);
+
     // Compile and run the program, only optimize if requested
     if optimization {
         optimized_compiler(commands).execute();
@@ -79,4 +85,7 @@ fn main() {
     }
 
     eprintln!();
+    if let Some(start) = start{
+        eprintln!("{:?}", start.elapsed());
+    }
 }
