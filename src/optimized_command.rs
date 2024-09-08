@@ -200,3 +200,31 @@ impl OptimizedCommand {
         optimized_program
     }
 }
+
+#[cfg(test)]
+mod tests{
+    use crate::command::Command;
+
+    use super::OptimizedCommand;
+
+    #[test]
+    fn no_duplicates(){
+        let program = [Command::StartOfLoop, Command::IncrementPointer, Command::IncrementValue, Command::DecrementPointer, Command::DecrementValue, Command::EndOfLoop];
+        let optimized_program = OptimizedCommand::optimize_commands(program.into_iter());
+        assert_eq!(optimized_program, [OptimizedCommand::StartOfLoop { end: 5 }, OptimizedCommand::AddPointer(1), OptimizedCommand::AddValue(1), OptimizedCommand::SubtractPointer(1), OptimizedCommand::SubtractValue(1), OptimizedCommand::EndOfLoop { start: 0 }]);
+    }
+    
+    #[test]
+    fn empty_loop(){
+        let program = [Command::StartOfLoop, Command::IncrementPointer, Command::DecrementPointer, Command::IncrementValue, Command::DecrementValue, Command::EndOfLoop];
+        let optimized_program = OptimizedCommand::optimize_commands(program.into_iter());
+        assert_eq!(optimized_program, [OptimizedCommand::StartOfLoop { end: 1 }, OptimizedCommand::EndOfLoop { start: 0 }]);
+    }
+
+    #[test]
+    fn add_2(){
+        let program = [Command::StartOfLoop, Command::IncrementPointer, Command::IncrementPointer, Command::IncrementValue, Command::IncrementValue, Command::DecrementPointer, Command::DecrementPointer, Command::DecrementValue, Command::DecrementValue, Command::EndOfLoop];
+        let optimized_program = OptimizedCommand::optimize_commands(program.into_iter());
+        assert_eq!(optimized_program, [OptimizedCommand::StartOfLoop { end: 5 }, OptimizedCommand::AddPointer(2), OptimizedCommand::AddValue(2), OptimizedCommand::SubtractPointer(2), OptimizedCommand::SubtractValue(2), OptimizedCommand::EndOfLoop { start: 0 }]);
+    }
+}

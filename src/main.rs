@@ -16,7 +16,8 @@
     clippy::single_call_fn,
     clippy::wildcard_enum_match_arm,
     clippy::use_debug,
-    clippy::min_ident_chars
+    clippy::min_ident_chars,
+    reason = ""
 )]
 
 use std::{

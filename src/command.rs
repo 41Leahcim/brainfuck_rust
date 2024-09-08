@@ -2,7 +2,7 @@ use core::fmt::{self, Display, Formatter};
 use std::error;
 
 /// Contains a invalid brainfuck command (will just be ignored)
-#[allow(clippy::module_name_repetitions)]
+#[expect(clippy::module_name_repetitions, reason = "Makes the error clearer")]
 #[derive(Debug)]
 pub struct InvalidCommand(char);
 

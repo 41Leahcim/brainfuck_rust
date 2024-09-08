@@ -129,7 +129,7 @@ impl Program {
         }
 
         // Flush the output
-        #[allow(clippy::unwrap_used)]
+        #[expect(clippy::unwrap_used, reason = "Flushing stdout shouldn't go wrong.")]
         io::stdout().flush().unwrap();
     }
 }
