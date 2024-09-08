@@ -24,7 +24,8 @@
 use std::{
     env::args,
     fs::File,
-    io::{BufReader, Read}, time::Instant,
+    io::{BufReader, Read},
+    time::Instant,
 };
 
 use chars::Chars;
@@ -61,7 +62,7 @@ fn main() {
             "-O" if !optimization => optimization = true,
             "-p" if !performance => performance = true,
             _ if file_name.is_none() => file_name = Some(argument),
-            _ => panic!("Unexpected argument: {argument}")
+            _ => panic!("Unexpected argument: {argument}"),
         }
     }
     let file_name = file_name.expect("No filename found");
@@ -85,7 +86,7 @@ fn main() {
     }
 
     eprintln!();
-    if let Some(start) = start{
+    if let Some(start) = start {
         eprintln!("{:?}", start.elapsed());
     }
 }
